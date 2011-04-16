@@ -21,6 +21,7 @@ Preparation:
 - extract pxe and boot files from winxp iso to the tftproot dir and patch ntldr (run extract-boot-files and patch-ntldr)
 - get and extract lan drivers and inf files from driverspack.net (run get-lan-drivers and extract-lan-drivers)
 - alternatively, extract drivers and inf files from winxp cd (run extract-winxp-drivers)
+- now is the time to add more ethernet drivers to to the drivers dir (inf files go to the inf dir)
 - build drivers database from extracted inf files (run build-drivers-database)
 - config dhcpd for bootp (in addition to ip assignment you need to specify the ip of the tftp server and the boot file which is "startrom.n12")
 - copy the I386 dir from winxp cd to tftproot/winxp/I386

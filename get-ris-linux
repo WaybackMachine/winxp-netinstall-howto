@@ -1,0 +1,9 @@
+#!/bin/bash
+
+RISVER=ris-linux-0.4
+
+test -f $RISVER.tar.gz || wget http://oss.netfarm.it/guides/$RISVER.tar.gz
+test -d rislinux || {
+    tar xvf $RISVER.tar.gz && mv $RISVER rislinux
+}
+

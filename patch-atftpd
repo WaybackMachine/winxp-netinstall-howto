@@ -1,0 +1,15 @@
+#!/bin/bash
+
+./get-ris-linux
+
+test -d atftpd || (
+    mkdir -p atftpd
+    cd atftpd
+    apt-get source atftpd || exit 0
+    cd atftp-0.7.dfsg
+    patch -p1 < ../../rislinux/patches/atftpd-filecase.diff || exit 0
+    sudo dpkg-buildpackage
+    cd ..
+    sudo dpkg -i atftpd*.deb
+)
+

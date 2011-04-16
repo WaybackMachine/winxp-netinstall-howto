@@ -1,0 +1,23 @@
+#!/bin/bash
+
+./get-lan-drivers
+
+test -d inf && exit 0
+test -d drivers && exit 0
+
+rm -Rf lan-drivers.temp
+mkdir -p lan-drivers.temp
+for i in DP_LAN_wnt5_x86-32_1101.7z DP_LAN-RIS_wnt5_x86-32_1011.7z; do
+    if [ -f $i ]; then
+	cp $i lan-drivers.temp/$i
+	(cd lan-drivers.temp; p7zip -d $i)
+    fi
+done
+
+mkdir -p inf
+mkdir -p drivers
+find lan-drivers.temp -type f \( -name "*.inf" -o -name "*.INF" -o -name "*.Inf" \) -exec mv {} inf \;
+find lan-drivers.temp -type f ! -name "*.inf" ! -name "*.INF" ! -name "*.Inf" -exec mv {} drivers \;
+
+rm -Rf lan-drivers.temp
+

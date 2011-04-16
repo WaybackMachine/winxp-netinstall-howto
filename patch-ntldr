@@ -1,0 +1,7 @@
+#!/bin/bash
+
+./extract-boot-files
+./get-ris-linux
+
+chmod u+w tftproot/ntldr && rislinux/fixloader.py tftproot/ntldr
+

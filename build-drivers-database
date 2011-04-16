@@ -1,0 +1,12 @@
+#!/bin/bash
+
+./get-ris-linux
+./extract-lan-drivers
+#switch the line below with one above if you like winxp original drivers better
+#./extract-winxp-drivers
+
+test -f rislinux/devlist.cache || (
+    cd rislinux
+    ./infparser.py ../inf
+)
+

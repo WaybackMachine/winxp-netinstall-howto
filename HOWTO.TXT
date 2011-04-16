@@ -1,0 +1,62 @@
+Install Windows XP SP3 via RIS
+==============================
+
+Requirements:
+
+- ris-linux package, for needed tools and patches and the BINL server
+- atftpd (or tftpd-hpa, but that's chrooted so no outside symlinks) + case-insensitive patch (from ris-linux)
+- udhcpd (or other dhcp server)
+- samba
+- a winxp iso
+- LAN drivers from driverpacks.net, or alternatively, windows drivers from the winxp iso
+- binl server from ris-linux + driver database built by a script from ris-linux
+- p7zip to unpack the LAN drivers archives
+
+Preparation:
+
+- patch atftpd to be case-insensitive (patch from ris-linux; on Debian run patch-atftpd)
+- choose a place for the tftp dir and tell atftpd about it in /etc/default/atftpd, and fix the tftproot symlink too!
+- dump your winxp cd to a iso file and fix the winxp.iso symlink to point to it so that mount-winxpcd can work
+- careful: make any file you put in the tftproot dir read-only to atftpd's user and group, including the dir itself!
+- extract pxe and boot files from winxp iso to the tftproot dir and patch ntldr (run extract-boot-files and patch-ntldr)
+- get and extract lan drivers and inf files from driverspack.net (run get-lan-drivers and extract-lan-drivers)
+- alternatively, extract drivers and inf files from winxp cd (run extract-winxp-drivers)
+- build drivers database from extracted inf files (run build-drivers-database)
+- config dhcpd for bootp (in addition to ip assignment you need to specify the ip of the tftp server and the boot file which is "startrom.n12")
+- copy the I386 dir from winxp cd to tftproot/winxp/I386
+- pour the contents of the drivers dir over tftproot/winxp/I386
+- tweak winnt.sif.sample and put it in tftproot/winnt.sif
+- config samba to share the tftproot/winxp dir as the "reminst" share (see smb.conf.sample)
+- change BASEPATH in rislinux/binlsrv.py to point to tftproot/winxp/i386; you can also make it point to the ../drivers dir,
+  it's the same thing as binlsrv only looks for the driver files.
+
+Installation:
+
+- server: start samba, dhcpd, atftpd, and binlsrv (use the included binlsrv start/stop script)
+- client: config client's bios for netbooting and reboot.
+
+Notes:
+
+The preparation process is mostly captured in scripts. Just run (and possibly edit to configure) the scripts
+in whatever order. The scripts call dependent scripts automatically and they don't do the same thing twice.
+So in case of error, you have to remove the effects of the script in order to run it again, eg. you have to
+remove the drivers dir manually to be able to extract the drivers again.
+
+References:
+
+http://www.promodus.net/linuxris/
+http://wiki.themel.com/XPNetInstall
+http://echo.wordpress.com/2010/03/01/installing-windows-xp-from-network-ris/
+http://diddy.boot-land.net/pxe/files/binl.htm
+http://diddy.boot-land.net/pxe/files/ris_files.htm
+http://diddy.boot-land.net/pxe/files/winnt_sif.htm
+http://driverpacks.net/
+http://oss.netfarm.it/guides/
+    http://oss.netfarm.it/guides/ris-linux.pdf
+    http://oss.netfarm.it/guides/ris-linux.php
+    http://oss.netfarm.it/guides/pxe.php
+http://paradice.forumotion.com/t3-winntsif-lists-nearly-all-possible-settings-for-unattended
+
+------------------------------------------------------
+Cosmin Apreutesei (c)2011, MIT license for my own work
+

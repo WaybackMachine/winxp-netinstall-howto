@@ -1,0 +1,14 @@
+#!/bin/bash
+
+test -f DP_LAN_wnt5_x86-32_1101.7z || {
+    echo "This will download WinXP LAN drivers pack via bittorrent. Press ^C when 100% downloaded. Press any key to continue..."
+    read
+    btdownloadheadless http://driverpacks.net/driverpacks/windows/xp/x86/lan/11.01/download/torrent
+}
+
+test -f DP_LAN-RIS_wnt5_x86-32_1011.7z || {
+    echo "This will download WinXP RIS LAN drivers pack via bittorrent. Press ^C when 100% downloaded. Press any key to continue..."
+    read
+    btdownloadheadless http://driverpacks.net/driverpacks/windows/xp/x86/lan-ris/10.11/download/torrent
+}
+

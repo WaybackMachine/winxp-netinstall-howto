@@ -1,0 +1,13 @@
+
+; this is only the RIS relevant part of your typically large smb.conf
+
+[global]
+   guest account = root
+   null passwords = true
+
+[REMINST]
+   browseable = yes
+   read only = yes
+   path = /home/tftp
+   guest ok = yes
+

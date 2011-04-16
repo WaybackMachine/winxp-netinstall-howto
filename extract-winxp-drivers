@@ -1,0 +1,13 @@
+#!/bin/bash
+
+./mount-winxpcd
+
+test -d inf && exit 0
+test -d drivers && exit 0
+mkdir -p inf
+mkdir -p drivers
+
+cabextract winxpcd/I386/*.IN_ -F "*.inf" -d inf
+cabextract winxpcd/I386/driver.cab -d drivers
+cabextract winxpcd/I386/sp3.cab -d drivers
+

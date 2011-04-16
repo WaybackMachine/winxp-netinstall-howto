@@ -1,0 +1,8 @@
+#!/bin/bash
+
+./mount-winxpcd
+
+test -f tftproot/startrom.n12 || cabextract winxpcd/I386/startrom.n1_ -d tftproot/.
+test -f tftproot/ntldr || cp winxpcd/I386/setupldr.bin tftproot/ntldr
+test -f tftproot/ntdetect.com || cp winxpcd/I386/ntdetect.com tftproot/ntdetect.com
+

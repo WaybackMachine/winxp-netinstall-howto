@@ -1,0 +1,78 @@
+[Data]
+Floppyless = 1
+; not installing from CD
+MsDosInitiated = "1"
+UnattendedInstall = "Yes"
+; stage 2 files
+OriSrc = "\\10.1.1.2\reminst\winxp\i386"
+OriTyp = 4
+LocalSourceOnCD = 1
+DisableAdminAccountOnDomainJoin = 1
+; skip the "help protect your pc" page
+AutomaticUpdates = No
+
+[Unattended]
+; why the hell not? is the best thing since Win95 OSR2
+Hibernation = Yes
+; skip bugging me with options set in this file (use ProvideDefault to still bug me)
+UnattendMode = DefaultHide
+; skip warning me about unsigned drivers
+DriverSigningPolicy = Ignore
+; skip EULA screen
+OemSkipEula = Yes
+; disable dynamic updates
+DUDisable = Yes
+DisableDynamicUpdates = Yes
+; don't auto activate
+AutoActivate = No
+; disable 15s delay for rebooting
+WaitForReboot = No
+; skip wellcome screen
+UnattendSwitch = No
+
+[GuiUnattended]
+; Bucharest
+TimeZone=130
+; skip welcome screens in gui setup
+OemSkipWelcome = 1
+
+[TapiLocation]
+; Romania
+CountryCode=40
+
+[Identification]
+JoinWorkgroup = LOCAL
+
+[Display]
+; don't bug me to confirm screen resolution change
+AutoConfirm = 1
+
+[SetupData]
+OsLoadOptions = "/fastdetect /noguiboot"
+; stage 1 files
+SetupSourceDevice = "\Device\LanmanRedirector\10.1.1.2\reminst\winxp"
+
+[UserData]
+FullName = "woods"
+OrgName = "Planet Express"
+; default random computer name (but the entry is required in this file)
+ComputerName = *
+; set this if you want it entered for you automatically
+ProductKey = "XXXXX-XXXXX-XXXXX-XXXXX-XXXXX"
+
+[Networking]
+; don't bug me to config my network, I won't activate anyway
+InstallDefaultComponents = Yes
+
+[RemoteInstall]
+; don't repartition the disk automatically, are you crazy?
+Repartition = No
+UseWholeDisk = No
+
+[Shell]
+; classic start menu, ty
+DefaultStartPanelOff = Yes
+; no themes, thanks
+DefaultThemesOff = Yes
+
+

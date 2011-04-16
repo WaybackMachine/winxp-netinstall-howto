@@ -1,0 +1,17 @@
+#!/bin/bash
+
+log=/var/log/binlsrv.log
+pid=/var/run/binlsrv.pid
+
+if [ "$1" == "start" ]; then
+(
+    cd rislinux
+    ./binlsrv.py &>"$log" &
+    echo $! > "$pid"
+)
+elif [ "$1" == "stop" ]; then
+    kill "$(cat "$pid")" && rm "$pid"
+else
+    echo "Usage: $0 start | stop"
+fi
+

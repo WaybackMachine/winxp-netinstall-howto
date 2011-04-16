@@ -1,0 +1,5 @@
+#!/bin/bash
+
+mkdir -p winxpcd
+test -d winxpcd/I386 || sudo mount -o loop winxp.iso winxpcd
+

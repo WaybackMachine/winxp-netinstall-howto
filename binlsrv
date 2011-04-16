@@ -1,14 +1,11 @@
 #!/bin/bash
 
+addr=10.1.1.2
 log=/var/log/binlsrv.log
 pid=/var/run/binlsrv.pid
 
 if [ "$1" == "start" ]; then
-(
-    cd rislinux
-    ./binlsrv.py &>"$log" &
-    echo $! > "$pid"
-)
+    rislinux/binlsrv.py --daemon --logfile="$log" --pid "$pid" --address="$addr" rislinux/devlist.cache
 elif [ "$1" == "stop" ]; then
     kill "$(cat "$pid")" && rm "$pid"
 else

@@ -59,7 +59,7 @@ OSC_NOTFOUND="""<OSCML>
 
 #############
 # Make sure there is the trailing / here
-BASEPATH = '/mnt/disk/ris/OSChooser/English/'
+BASEPATH = '/home/tftp/winxp/I386'
 WELCOME  = 'welcome.osc'
 DUMPING  = False
 
@@ -1023,7 +1023,7 @@ if __name__ == '__main__':
 
     ## Parse command line arguments
     shortopts = 'hdl:a:p:'
-    longopts = [ 'help', 'daemon', 'logfile=', 'address=', 'port=' ]
+    longopts = [ 'help', 'daemon', 'logfile=', 'address=', 'port=', 'pid=' ]
 
     try:
         opts, args = getopt(argv[1:], shortopts, longopts)

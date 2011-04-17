@@ -1,0 +1,5 @@
+#!/bin/bash
+
+(cd rislinux; gcc binlsrv.c -o binlsrv)
+
+

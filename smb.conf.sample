@@ -6,8 +6,9 @@
    null passwords = true
 
 [REMINST]
+   path = /home/tftp
    browseable = yes
    read only = yes
-   path = /home/tftp
+   writeable = no
    guest ok = yes
 

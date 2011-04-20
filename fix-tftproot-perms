@@ -1,0 +1,6 @@
+#!/bin/bash
+
+chgrp tftp tftproot -R
+chmod g-w tftproot -R
+chmod u+w tftproot -R
+chmod o-rwx tftproot -R

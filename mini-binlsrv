@@ -1,16 +1,20 @@
 #!/bin/bash
 
+home=/home/cosmin/projects/pxe-ris-winxp
 log=/var/log/mini-binlsrv.log
 pid=/var/run/mini-binlsrv.pid
 
 if [ "$1" == "start" ]; then
 (
+    cd "$home"
     cd rislinux
     nohup ./binlsrv &> "$log" &
     echo $! > "$pid"
 )
 elif [ "$1" == "stop" ]; then
+(
     kill "$(cat "$pid")" && rm "$pid"
+)
 else
     echo "Usage: $0 start | stop"
 fi

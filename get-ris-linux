@@ -3,7 +3,7 @@
 RISVER=ris-linux-0.4
 
 test -f $RISVER.tar.gz || wget http://oss.netfarm.it/guides/$RISVER.tar.gz
-test -d rislinux || {
+test -f rislinux/binlsrv.c || {
     tar xvf $RISVER.tar.gz && mv $RISVER rislinux
 }
 

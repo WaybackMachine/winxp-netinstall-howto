@@ -15,9 +15,7 @@ Preparation:
 
 - patch atftpd to be case-insensitive (patch from ris-linux; on Debian run patch-atftpd)
 - choose a dir for tftp files, edit /etc/default/atftpd for it, and fix the tftproot symlink to point to it!
-- dump your winxp cd to a iso file and fix the winxp.iso symlink to point to it so that mount-winxpcd can work!
-- warning: make any file you put in the tftproot dir read-only to atftpd's user and group, including the dir itself!!!
-- ...to do the above, run fix-tftproot-perms.
+- fix the winxp.iso symlink to point to a iso of winxp and mount it with mount-winxpcd!
 - extract pxe and boot files from winxp iso to the tftproot dir and patch ntldr: run extract-boot-files and patch-ntldr
 - get and extract lan drivers and inf files from driverspack.net: run get-lan-drivers and extract-lan-drivers
 - alternatively, extract drivers and inf files from winxp cd: run extract-winxp-drivers
@@ -33,6 +31,7 @@ Preparation:
   to the ../drivers dir, it's the same thing as binlsrv only looks for the driver files.
 - alternatively, you may want to build and use the mini-binl server (eg. binlsrv.py didn't find
   my RTL GigE driver): run build-mini-binlsrv
+- run fix-tftproot-perms to make the whole tftproot read-only to atftpd's user and group
 
 Installation:
 

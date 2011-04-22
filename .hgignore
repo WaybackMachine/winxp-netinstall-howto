@@ -3,4 +3,5 @@
 ^inf
 \.7z$
 \.tar.gz$
+\.zip$
 ^winxpcd$

@@ -3,49 +3,59 @@ Install Windows XP SP3 via RIS from Linux
 
 Requirements:
 
-- ris-linux package, for needed tools and patches and the BINL server
-- atftpd (or tftpd-hpa, but that's chrooted so no outside symlinks) + case-insensitive patch (from ris-linux)
-- udhcpd (or other dhcp server) configured for bootp
-- samba configured to share the I386 directory of winxp
-- a winxp iso to get drivers and files needed for installation
-- LAN drivers from driverpacks.net (+p7zip archiver), or windows drivers from the winxp iso, or both
-- binl server from ris-linux + driver database built by a script from ris-linux
+- debian assumed, but any linux should work, and windows too
+- atftpd
+- udhcpd or other dhcp server
+- samba
+- a winxp sp3 iso
+- (download script included) ris-linux, for needed tools and patches and the BINL server
+- (download script included) LAN drivers from driverpacks.net, or windows drivers from the winxp iso, or both
 
 Preparation:
 
-- patch atftpd to be case-insensitive (patch from ris-linux; on Debian run patch-atftpd)
-- choose a dir for tftp files, edit /etc/default/atftpd for it, and fix the tftproot symlink to point to it!
-- fix the winxp.iso symlink to point to a iso of winxp and mount it with mount-winxpcd!
-- extract pxe and boot files from winxp iso to the tftproot dir and patch ntldr: run extract-boot-files and patch-ntldr
-- get and extract lan drivers and inf files from driverspack.net: run get-lan-drivers and extract-lan-drivers
-- alternatively, extract drivers and inf files from winxp cd: run extract-winxp-drivers
-- now is the time to add more ethernet drivers: inf files go to the inf dir, sys files and the rest to the drivers dir
-- build drivers database from extracted inf files: run build-drivers-database
-- config dhcpd for bootp: you need to tell it the ip of the tftp server and the boot file which is "startrom.n12"
-- if you use pxelinux instead, copy or symlink startrom.n12 to startrom.0 and just add "kernel startrom.0" to your pxelinux menu entry
-- copy the I386 dir from winxp cd to tftproot/winxp/I386
-- pour the contents of the drivers dir over tftproot/winxp/I386
-- tweak winnt.sif.sample and put it in tftproot/winnt.sif
-- config samba to share the tftproot/winxp dir as the "reminst" share (see smb.conf.sample)
-- change BASEPATH in rislinux/binlsrv.py to point to tftproot/winxp/i386; you can also make it point
-  to the ../drivers dir, it's the same thing as binlsrv only looks for the driver files.
-- alternatively, you may want to build and use the mini-binl server (eg. binlsrv.py didn't find
-  my RTL GigE driver): run build-mini-binlsrv
-- run fix-tftproot-perms to make the whole tftproot read-only to atftpd's user and group
+- run get-ris-linux to download the rislinux package
+- run patch-atftpd to patch atftp with patch from rislinux
+- adduser tftp, which will also create /home/tftp where we'll put our boot files
+- edit /etc/default/atftpd adding "--user=tftp --group=tftp /home/tftp" to the OPTIONS variable
+- grab a winxp iso and fix the winxp.iso symlink to point to it
+- run mount-winxpcd to mount that iso
+- run extract-boot-files to extract boot files from the iso
+- run patch-ntldr to patch ntldr for netbooting
+- run get-lan-drivers to download the lan drivers from driverpacks.net via bittorrent
+- run extract-lan-drivers to extract downloaded driver files into the inf and drivers
+  directories respectively
+- now is a good time to add more ethernet drivers if you need to, eg. I had to download the drivers
+  for my Realtek GigE card from Realtek, others would not work; after you download your drivers, put any
+  .inf files in the inf dir, and all other files (.sys, .dll, etc.) in the drivers dir
+- run build-drivers-database to build nics.txt and drivers.cache by parsing the inf files from the inf dir
+- run build-mini-binlsrv to build the mini-binl server that will tell windows about network drivers when it asks
+- run copy-winxp-files to copy the i386 dir from the winxp cd along with the contents of the drivers dir
+- configure samba to share /home/tftp/winxp as the "reminst" share; take a look at smb.conf.sample for that
+- copy winnt.sif.sample to /home/tftp/winnt.sif and change the the network paths in there to point to your share
+- run fix-tftproot-perms to make /home/tftp read-only for the tftp user under which atftp runs, very important!
+- configure your dhcp server for bootp: in addition to specifying an ip range to lease,
+  you need to specify the the boot-file dhcp option, which in this case is "startrom.n12"
 
 Installation:
 
-- server: start samba, dhcpd, atftpd, and binlsrv (or mini-binlsrv).
-- to start/stop binlsrv/mini-binlsrv use the included binlsrv (or mini-binlsrv) start/stop script.
-- client: config client's bios for netbooting and reboot.
+- restart samba, dhcpd and atftpd.
+- run ./mini-binlsrv start to start the mini-binlr server.
+- configure client's bios for pxe booting and reboot it.
 
 Notes:
 
-As you can see, the preparation process is mostly captured in scripts. Just run (and possibly edit
+The preparation process is mostly captured in scripts. Just run (and possibly edit
 to configure) the scripts in whatever order. The scripts call dependent scripts automatically and they
 don't do the same thing twice. So in case of error, you have to remove the effects of the script
 in order to run it again, eg. you have to remove the drivers dir manually to be able to extract
 the drivers again.
+
+When it comes to getting the drivers, you can also get them from the winxp iso itself,
+by running extract-winxp-drivers.
+
+If using pxelinux:
+- symlink startrom.n12 to startrom.0 (pxelinux makes assumptions based on file extension)
+- add a menu entry to /home/tftp/pxelinux.cfg/default with the line "kernel startrom.0"
 
 References:
 
@@ -62,6 +72,5 @@ http://oss.netfarm.it/guides/
     http://oss.netfarm.it/guides/pxe.php
 http://paradice.forumotion.com/t3-winntsif-lists-nearly-all-possible-settings-for-unattended
 
-------------------------------------------------------
-Cosmin Apreutesei (c)2011, MIT license for my own work
-
+--------------------------------------
+Cosmin Apreutesei (c)2011, MIT license

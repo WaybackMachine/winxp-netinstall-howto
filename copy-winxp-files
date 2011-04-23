@@ -1,0 +1,15 @@
+#!/bin/bash
+
+test -d $dest && exit 0
+
+./mount-winxpcd
+./extract-lan-drivers
+#switch the line below with the one above if you'd rather use winxp's drivers
+#./extract-winxp-drivers
+
+dest=tftproot/winxp
+mkdir -p $dest
+cp -R winxpcd/I386 $dest
+mkdir -p $dest/I386
+cp drivers/* $dest/I386
+

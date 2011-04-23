@@ -2,7 +2,6 @@
 
 rm drivers
 rm inf
-rm rislinux
 rm ris-linux-*.tar.gz
 rm DP_*.7z
 sudo rm -R atftpd

@@ -6,5 +6,6 @@ rm ris-linux-*.tar.gz
 rm DP_*.7z
 sudo rm -R atftpd
 
-sudo umount winxpcd && rm winxpcd
+sudo umount winxpcd
+rmdir winxpcd
 

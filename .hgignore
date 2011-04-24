@@ -3,6 +3,5 @@
 ^inf
 \.7z$
 \.tar.gz$
-\.tgz$
 \.zip$
 ^winxpcd$

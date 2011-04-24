@@ -1,0 +1,6 @@
+#!/bin/bash
+
+./clean-everything
+
+tar czvf winxp-netinstall.tgz * --exclude rislinux --exclude winxp-netinstall.tgz
+

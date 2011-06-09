@@ -2,8 +2,8 @@
 
 ### BEGIN INIT INFO
 # Provides:          mini_binlsrv
-# Required-Start:    $local_fs $syslog $network data_disks
-# Required-Stop:     $local_fs $syslog $network data_disks
+# Required-Start:    $local_fs $syslog $network
+# Required-Stop:     $local_fs $syslog $network
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: mini binl server
@@ -11,7 +11,7 @@
 ### END INIT INFO
 
 
-home=/home/cosmin/projects/pxe-ris-winxp
+home=/opt/pxe-ris-winxp
 log=/var/log/mini-binlsrv.log
 pid=/var/run/mini-binlsrv.pid
 
